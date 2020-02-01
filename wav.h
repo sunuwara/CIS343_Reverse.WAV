@@ -1,17 +1,26 @@
+/*	*/
 
-// WAVE file header format
-struct HEADER {
-    unsigned char riff[3];                      // RIFF string
-    unsigned int overall_size;                  // overal size of file in bytes
-    unsigned char wave[3];                      // WAVE string
-    unsigned char fmt_chunk_marker[3];          // fmt string with trailing null char
-    unsigned int length_of_fmt;					// length of the format data
-	unsigned int format_type;					// format type. 1-PCM, 3- IEEE float, 6 - 8bit A law, 7 - 8bit mu law
-	unsigned int channels;						// no.of channels
-	unsigned int sample_rate;					// sampling rate (blocks per second)
-	unsigned int byterate;						// SampleRate * NumChannels * BitsPerSample/8
-	unsigned int block_align;					// NumChannels * BitsPerSample/8
-	unsigned int bits_per_sample;				// bits per sample, 8- 8bits, 16- 16 bits etc
-	unsigned char data_chunk_header [3];		// DATA string or FLLR string
-	unsigned int data_size;						// NumSamples * NumChannels * BitsPerSample/8 - size of the next chunk that will be read
-};
+#ifndef WAV_H_
+#define WAV_H_
+
+// .wav files header
+typedef struct wav_file {
+    char riff[4];						// "RIFF" string - always the same values
+    int wav_size;						// chunk size of .wav file - 8 bytes
+    char wave[4];						// "WAVE" string - don't use if it doesn't say this!
+    char fmt[4];          				// "fmt " string has trailing null char
+	int format_length;					// length of format section
+	short format_type;					// format type: 1 for PCM, 3 for IEEE float
+	short num_channels;					// number of channels
+	int sample_rate;					// sample rate
+	int byte_rate;						// byte rate: sample_rate * num_channels * (bits_per_sample / 8)
+	short block_align;					// block alignment: num_channels * (bits_per_sample / 8)
+	short bits_per_sample;				// bits per sample: 8bits, 16bits etc.
+	char data[4];						// "data" string - beginning of data section
+	int data_size;						// number of bytes in data section: num_samples * num_channels * (bits_per_sample / 8)
+	char* actual_data;					// rest of the data
+} wav_file;
+
+wav_file* parse(char* contents);
+
+#endif // WAV_H
