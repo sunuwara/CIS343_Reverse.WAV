@@ -1,6 +1,8 @@
 
+#ifndef WAV_H_
+#define WAV_H_
 // WAVE file header format
-struct HEADER {
+struct wave_file {
     unsigned char riff[3];                      // RIFF string
     unsigned int overall_size;                  // overal size of file in bytes
     unsigned char wave[3];                      // WAVE string
@@ -12,6 +14,8 @@ struct HEADER {
 	unsigned int byterate;						// SampleRate * NumChannels * BitsPerSample/8
 	unsigned int block_align;					// NumChannels * BitsPerSample/8
 	unsigned int bits_per_sample;				// bits per sample, 8- 8bits, 16- 16 bits etc
-	unsigned char data_chunk_header [3];		// DATA string or FLLR string
+	unsigned char data_chunk_header[3];		    // DATA string or FLLR string
 	unsigned int data_size;						// NumSamples * NumChannels * BitsPerSample/8 - size of the next chunk that will be read
 };
+
+#endif WAV_H
