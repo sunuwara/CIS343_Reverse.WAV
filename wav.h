@@ -1,4 +1,8 @@
-/*	*/
+/*	wav.h Header file
+ *	Defines the struct of a .wav files header
+ *	
+ * 	Authors: Aron Sunuwar & Karan Tamang 
+ * */
 
 #ifndef WAV_H_
 #define WAV_H_
@@ -21,6 +25,7 @@ typedef struct wav_file {
 	char* actual_data;					// rest of the data
 } wav_file;
 
+// parse a .wav file
 wav_file* parse(char* contents);
 
-#endif // WAV_H
+#endif // WAV_H_
