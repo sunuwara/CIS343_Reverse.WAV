@@ -2,11 +2,11 @@
  * 	Authors: Aron Sunuwar & Karan Tamang 
  * */
 
-#ifndef		__H_FILE__
-#define		__H_FILE__
+#ifndef		__FILE_H__
+#define		__FILE_H__
 
 size_t read_file( char* filename, char **buffer);
 
 size_t write_file( char* filename, char *buffer, size_t size);
 
-#endif //FILE_H_
+#endif		//__FILE_H__

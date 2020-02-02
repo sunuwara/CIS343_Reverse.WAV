@@ -10,7 +10,7 @@ int main(int argc, char** argv) {
     printf("Wav Read Test\n");
     
     if (argc < 2) {
-        fprintf(stderr, "Expecting wav file as argument!\n");
+        printf("Expecting wav file as argument!\n");
         exit(1);
     }
     
