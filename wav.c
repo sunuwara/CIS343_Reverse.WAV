@@ -1,5 +1,4 @@
 /*	wav.c Source file
- *	
  * 	Authors: Aron Sunuwar & Karan Tamang 
  * */
 
