@@ -31,5 +31,5 @@ size_t read_file(char* filename, char** buffer) {
 
 // Write to an output file
 size_t write_file(char* filename, char* buffer, size_t size) {
-
+    
 }

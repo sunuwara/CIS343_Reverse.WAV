@@ -14,7 +14,7 @@ int main(int argc, char** argv) {
         exit(1);
     }
     
-    // Read file
+    Read file
     read_file(argv[1], )
     fscanf(fptr, "%d", &num);
     printf("File: %s", &fileName);
@@ -29,3 +29,4 @@ int main(int argc, char** argv) {
 
     return 0;
 }
+
