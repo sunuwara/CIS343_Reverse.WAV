@@ -1,10 +1,9 @@
 /*	file.h Header file
- *	
  * 	Authors: Aron Sunuwar & Karan Tamang 
  * */
 
-#ifndef FILE_H_
-#define FILE_H_
+#ifndef		__H_FILE__
+#define		__H_FILE__
 
 size_t read_file( char* filename, char **buffer);
 

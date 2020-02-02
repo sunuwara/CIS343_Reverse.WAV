@@ -1,18 +1,21 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "file.h"
 
-int main(int argc, char *argv) {
+int main(int argc, char** argv) {
 
     int num;
     FILE *fptr;
     
     printf("Wav Read Test\n");
     
-    if (argc != 2) {
-        fprintf(stderr, "Expecting wav file as argument\n");
-        return 1;
+    if (argc < 2) {
+        fprintf(stderr, "Expecting wav file as argument!\n");
+        exit(1);
     }
     
+    // Read file
+    read_file(argv[1], )
     fscanf(fptr, "%d", &num);
     printf("File: %s", &fileName);
     printf("===================");
