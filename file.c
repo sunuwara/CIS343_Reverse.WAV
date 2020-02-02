@@ -9,7 +9,9 @@
 // Reads an input file
 size_t read_file(char* filename, char** buffer) {
     FILE* fin;
-    int fsize;
+    size_t fsize;
+    char temp;
+    size_t index = 0;
 
     // Open input file
     fin = fopen(filename, "rb");
@@ -26,10 +28,22 @@ size_t read_file(char* filename, char** buffer) {
     // Allocate mem space for *buffer
     *buffer = malloc(fsize * sizeof(char));
 
-
+    // Read input file to a buffer
+    fread(*buffer, sizeof(char), fsize, fin);
+    fclose(fin);
+    
+    return fsize;
 }
 
 // Write to an output file
 size_t write_file(char* filename, char* buffer, size_t size) {
-    
+
+    FILE* fout;
+    fout = fopen(filename, "wb");
+
+    for(int i = 0; i < size; ++i) {
+        fprintf(fout, "%c", buffer[i]);
+    }
+
+    return 0;
 }
