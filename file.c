@@ -14,7 +14,7 @@ size_t read_file(char* filename, char** buffer) {
     // Open input file
     fin = fopen(filename, "rb");
     if (fin == NULL) {
-        fprintf(stderr, "Could not open input file!\n");
+        printf("Could not open input file!\n");
         exit(1);
     }
 
@@ -26,7 +26,7 @@ size_t read_file(char* filename, char** buffer) {
     // Allocate mem space for *buffer
     *buffer = malloc(fsize * sizeof(char));
 
-    
+
 }
 
 // Write to an output file

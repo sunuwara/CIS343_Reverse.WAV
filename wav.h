@@ -2,8 +2,8 @@
  * 	Authors: Aron Sunuwar & Karan Tamang 
  * */
 
-#ifndef		__H_WAV__
-#define		__H_WAV__
+#ifndef		__WAV_H__
+#define		__WAV_H__
 
 // .wav files header
 typedef struct wav_file {
@@ -26,4 +26,4 @@ typedef struct wav_file {
 // parse a .wav file
 wav_file* parse(char* contents);
 
-#endif		//__H_WAV__
+#endif		//__WAV_H__
