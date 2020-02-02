@@ -1,13 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int main(int argc, char *argv)
-{
+int main(int argc, char *argv) {
+
     int num;
     FILE *fptr;
+    
     printf("Wav Read Test\n");
-    if (argc != 2)
-    {
+    
+    if (argc != 2) {
         fprintf(stderr, "Expecting wav file as argument\n");
         return 1;
     }
