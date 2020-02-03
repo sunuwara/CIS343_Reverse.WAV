@@ -15,8 +15,8 @@ size_t read_file(char* filename, char** buffer) {
     // Open read file
     fin = fopen(filename, "rb");
     if (fin == NULL) {
-        printf("--- Could not open input file!\n");
-        exit(1);
+        fprintf(stderr, "Error: Could not open %s input file!\n", filename);
+        exit(EXIT_FAILURE);
     }
 
     // Find size of file
@@ -24,8 +24,12 @@ size_t read_file(char* filename, char** buffer) {
     fsize = ftell(fin);
     fseek(fin, 0, SEEK_SET);
 
-    // Allocate mem space for *buffer
+    // Allocate memory space for *buffer
     *buffer = malloc(fsize * sizeof(char));
+    if (buffer == NULL) {
+        fprintf(stderr, "malloc() failed: memory not allocated!\n");
+        exit(EXIT_FAILURE);
+    }
 
     // Read input file to a buffer
     fread(*buffer, sizeof(char), fsize, fin);
@@ -42,8 +46,8 @@ size_t write_file(char* filename, char* buffer, size_t size) {
     // Open write file
     fout = fopen(filename, "wb");
     if (fout == NULL) {
-        printf("--- Could not open output file!\n");
-        exit(1);
+        fprintf(stderr, "Error: Could not open %s output file!\n", filename);
+        exit(EXIT_FAILURE);
     }
 
     // Write from buffer to output file

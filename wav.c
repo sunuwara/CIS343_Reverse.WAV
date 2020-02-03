@@ -10,22 +10,15 @@
 // parse a .wav file
 wav_file* parse(char* contents) {
     
+    // Allocate memory space for *header
     wav_file* header = malloc(sizeof(wav_file));
+    if (header == NULL) {
+        fprintf(stderr, "malloc() failed: memory not allocated!\n");
+        exit(EXIT_FAILURE);
+    }
+
+    // Copy header bytes of .wav file to wav file struct
     memcpy(header, contents, sizeof(wav_file));
-    
-    printf("RIFF            - %s\n", header->riff);
-    printf("size            - %d\n", header->wav_size);
-    printf("WAVE            - %s\n", header->wave);
-    printf("fmt             - %s\n", header->fmt);
-    printf("format length   - %d\n", header->format_length);
-    printf("format type     - %hd\n", header->format_type);
-    printf("# channels      - %hd\n", header->num_channels);
-    printf("sample rate     - %d\n", header->sample_rate);
-    printf("byte rate       - %d\n", header->byte_rate);
-    printf("block align     - %hd\n", header->block_align);
-    printf("bits / sample   - %hd\n", header->bits_per_sample);
-    printf("data            - %s\n", header->data);
-    printf("data size       - %d\n\n", header->data_size);
 
     return header;
 }

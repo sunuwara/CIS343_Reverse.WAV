@@ -12,6 +12,7 @@
 #include "wav.h"
 
 int main(int argc, char** argv) {
+   
     char* buffer;
     char* reversed_buffer;
     int size;
@@ -19,44 +20,50 @@ int main(int argc, char** argv) {
     int bytes_per_sample;
 
     // Invalid arguments error catching
-    if (argc < 3) {
+    if (argc != 3) {
         if (argc < 2)
-            printf("--- Expecting input .wav file as 1st argument!\n");
+            fprintf(stderr, "Invalid argument: Expecting input and output .wav file!\n");
+        else if (argc > 3) 
+            fprintf(stderr, "Invalid argument: Too many arguments!\n");
         else
-            printf("--- Expecting output .wav file as 2nd argument!\n");
+            fprintf(stderr, "Invalid argument: Expecting output .wav file!\n");
         
-        exit(1);
+        exit(EXIT_FAILURE);
     }
 
-    // Read file
+    // Read input file
     size = read_file(argv[1], &buffer);
 
-    // Parse the buffer
+    // Parse the buffer into wav_file header
     header = parse(buffer);
 
     // Output file statistics:
     printf("File: %s\n", argv[1]);
     printf("=========================================================\n");
     printf("- File size is %d. Read %d bytes.\n", header->wav_size, size);
-    printf("- Format is \"%s\" with format data length %d.\n", header->fmt, header->format_length);
-    printf("- Format type is %s.\n", header->wave);
+    printf("- Format is \"%.4s\" with format data length %d.\n", header->fmt, header->format_length);
+    printf("- Format type is %.4s.\n", header->wave);
     printf("- %hd channel(s) with a sample rate of %d.\n", header->num_channels, header->sample_rate);
-    printf("- %d byte rate, %d alignment,", header->byte_rate, header->block_align);
-    printf(" %d bits per sample.\n", header->bits_per_sample);
-    printf("- Data is \"%s\" and data size is %d.\n", header->data, header->data_size);
+    printf("- %d byte rate, %d alignment, %d bits per sample.\n", header->byte_rate, header->block_align, header->bits_per_sample);
+    printf("- Data is \"%.4s\" and data size is %d.\n", header->data, header->data_size);
 
-    // Reversing file
+    //Allocate memory space for *reversed_buffer
     reversed_buffer = malloc(size * sizeof(char));
-    
-    memcpy(reversed_buffer, header, sizeof(wav_file));       // copy the header to reversed buffer
+    if (reversed_buffer == NULL) {
+        fprintf(stderr, "malloc() failed: memory not allocated!\n");
+        exit(EXIT_FAILURE);
+    }
 
-    // reversing audio data
-    for(int i = 0; i <= (size - 44); i += (header->bits_per_sample / 8)) {
+    // Copy header bytes to reversed buffer
+    memcpy(reversed_buffer, header, sizeof(wav_file));       
+
+    // Reversing audio data
+    for(int i = 0; i < (size - 44); i += (header->bits_per_sample / 8)) {
         reversed_buffer[44 + i] = buffer[size - (2 + i)];
         reversed_buffer[45 + i] = buffer[size - (1 + i)];
     }
 
-    // Write file
+    // Write to output file
     write_file(argv[2], reversed_buffer, size);
 
     free(buffer);
