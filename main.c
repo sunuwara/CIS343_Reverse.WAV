@@ -5,6 +5,7 @@
 
 int main(int argc, char** argv) {
     char* buffer;
+    char* reverse_buffer;
     int size;
     wav_file* header;
 
@@ -35,8 +36,15 @@ int main(int argc, char** argv) {
     printf(" %d bits per sample.\n", header->bits_per_sample);
     printf("- Data is \"%s\" and data size is %d.\n", header->data, header->data_size);
 
+    // Reversing file
+    reverse_buffer = buffer;
+    for(int i = 0; i < (size - 44); i += 2) {
+        (reverse_buffer)[44 + i] = (buffer)[size - (1 + i)];
+        (reverse_buffer)[45 + i] = (buffer)[size - i];
+    }
+
     // Write file
-    write_file(argv[2], buffer, size);
+    write_file(argv[2], reverse_buffer, size);
 
     free(buffer);
     free(header);
